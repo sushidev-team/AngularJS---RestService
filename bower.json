@@ -16,6 +16,10 @@
     "type": "git",
     "url": "git://github.com:AMBERSIVE/AngularJS---RestService.git"
   },
+  "ignore": [
+    "node_modules",
+    "bower_components"
+  ],
   "license": "MIT",
   "homepage": "http://www.ambersive.com"
 }
