@@ -1,0 +1,17 @@
+{
+  "name": "ambersive-rest",
+  "version": "0.0.1",
+  "authors": [
+    "Manuel Ihl <manuel.ihl@ambersive.com>"
+  ],
+  "description": "Consume Webservices like RESTful-API with this AngularJS module.",
+  "main": "build/rest.js",
+  "keywords": [
+    "AngularJS",
+    "Angular",
+    "Restful",
+    "Rest"
+  ],
+  "license": "MIT",
+  "homepage": "http://www.ambersive.com"
+}
