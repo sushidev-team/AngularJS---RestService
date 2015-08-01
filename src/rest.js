@@ -24,7 +24,7 @@ angular.module('ambersive.rest').factory('RestSrv',['$http',
                 'tokenType':'Bearer '
             },
             'contentType':'application/json; charset=utf-8;',
-            'errorHandling':{
+            'errorHandling':{ 
                 'on401':function(callback){
                     // overwriteable
                     if(callback){callback();}

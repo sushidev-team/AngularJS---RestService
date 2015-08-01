@@ -1,5 +1,5 @@
 # RESTful - AngularJS Service
-An AngularJS service for using RESTful Webservices
+An AngularJS service for using RESTful Webservices with an build-in auto-mechanism for detecting access tokens.
 ### Version
 0.0.1
 
@@ -64,11 +64,23 @@ angular.module('app').controller('DemoController', function($scope, RestSrv) {
 
 ### Configuration
 
-You an configurate few things like
-
+You an configurate few things like storageName, tokenName etc.
+#### tokenName 
+This value determine the name of the access token. 
 ```sh
+RestSrv.config.auth.tokenName = 'NAME'; // Default value: accessToken
 ```
-
+#### tokenType 
+This value determine the tokenType of the access token. 
+```sh
+RestSrv.config.auth.tokenType = 'NAME'; // Default value: 'Bearer '
+```
+#### storeageName & storageValidDays 
+This value determine the name of the cookie, in which the access token will be safed. 
+```sh
+RestSrv.config.auth.storageName = 'NAME'; // Default value: accessToken
+RestSrv.config.auth.storageValidDays ='' // Default value: 7
+```
 ### Error-Handling
 
 This service provides an easy way to determine an error handling for 401 and 403 status codes.
