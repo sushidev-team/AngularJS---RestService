@@ -61,6 +61,30 @@ angular.module('app').controller('DemoController', function($scope, RestSrv) {
 
 });
 ```
+
+### Configuration
+
+You an configurate few things like
+
+```sh
+```
+
+### Error-Handling
+
+This service provides an easy way to determine an error handling for 401 and 403 status codes.
+If you want to set a error handler insert the following code.
+
+```sh
+RestSrv.config.errorHandling.on401 = function(callbackFN){
+    // Insert here your code
+    // Callback method fires the normal response mechanism
+});
+RestSrv.config.errorHandling.on403 = function(callbackFN){
+    // Insert here your code
+    // Callback method fires the normal response mechanism
+});
+```
+
 License
 ----
 MIT
