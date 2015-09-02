@@ -24,7 +24,7 @@ angular.module('ambersive.rest').factory('RestSrv',['$http',
                 'tokenType':'Bearer '
             },
             'contentType':'application/json; charset=utf-8;',
-            'errorHandling':{ 
+            'errorHandling':{
                 'on401':function(callback){
                     // overwriteable
                     if(callback){callback();}
@@ -184,6 +184,7 @@ angular.module('ambersive.rest').factory('RestSrv',['$http',
                     response.status = status;
                     response.data = data;
                     if(data.status !== undefined){response.status = data.status;}
+                    if(data.data !== undefined) { response.data = data.data;}
 
                     if(headers !== undefined){
                         RestSrv.token.fromHeader(headers);
@@ -209,7 +210,13 @@ angular.module('ambersive.rest').factory('RestSrv',['$http',
 
                 }).error(function(data,status,headers,config){
                     response.status = status;
+                    if(data.status !== undefined) {
+                        response.status = data.status;
+                    }
                     response.data = data;
+                    if(data.data !== undefined) {
+                        response.data = data.data;
+                    }
                     return RestSrv.response(response,callback);
                 });
 
