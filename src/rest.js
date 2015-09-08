@@ -124,8 +124,8 @@ angular.module('ambersive.rest').factory('RestSrv',['$http','$log',
                 }
             },
             'fromHeader':function(headers){
-                if(headers(RestSrv.config.auth.tokenName) !== undefined && headers(RestSrv.config.auth.tokenName) !== null){
-                    RestSrv.token.set(headers(RestSrv.config.auth.tokenName));
+                if(headers(RestSrv.config.auth.storageName) !== undefined && headers(RestSrv.config.auth.storageName) !== null){
+                    RestSrv.token.set(headers(RestSrv.config.auth.storageName));
                 }
             }
         };
