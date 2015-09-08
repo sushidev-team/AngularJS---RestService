@@ -7,8 +7,8 @@
 
 angular.module('ambersive.rest',[]);
 
-angular.module('ambersive.rest').factory('RestSrv',['$http',
-    function($http){
+angular.module('ambersive.rest').factory('RestSrv',['$http','$log',
+    function($http,$log){
 
         var RestSrv = {};
 
@@ -143,13 +143,25 @@ angular.module('ambersive.rest').factory('RestSrv',['$http',
                 if(token !== undefined && token !== null && token !== '') {
                     RestSrv.token.set(token);
                 }
-                RestSrv.token.get(function(token) {
-                    if(token === undefined){token = null;}
-                    if(token === null){
-                        $http.default.headers.common.Authorization = RestSrv.config.auth.tokenType+token;
+
+                RestSrv.token.get(function (token) {
+                    if (token === undefined) {
+                        token = null;
+                    }
+                    if (token !== null) {
+                        try {
+                            $http.defaults.headers.common[RestSrv.config.auth.tokenName] = RestSrv.config.auth.tokenType + token;
+                        } catch(err){
+                            $log.warn(err);
+                        }
+                        try {
+                            $http.defaults.headers.common.Authorization = RestSrv.config.auth.tokenType + token;
+                        } catch(err){
+                            $log.warn(err);
+                        }
                         setAuth = true;
                     }
-                    return RestSrv.response(setAuth,callback);
+                    return RestSrv.response(setAuth, callback);
                 });
             }
         };
@@ -183,6 +195,7 @@ angular.module('ambersive.rest').factory('RestSrv',['$http',
 
                     response.status = status;
                     response.data = data;
+                    $log.log(data);
                     if(data.status !== undefined){response.status = data.status;}
                     if(data.data !== undefined) { response.data = data.data;}
 
@@ -209,13 +222,16 @@ angular.module('ambersive.rest').factory('RestSrv',['$http',
                     }
 
                 }).error(function(data,status,headers,config){
+                    if(status === 0){status = 400;}
                     response.status = status;
-                    if(data.status !== undefined) {
-                        response.status = data.status;
-                    }
-                    response.data = data;
-                    if(data.data !== undefined) {
-                        response.data = data.data;
+                    if(data !== undefined && data !== null) {
+                        if (data.status !== undefined) {
+                            response.status = data.status;
+                        }
+                        response.data = data;
+                        if (data.data !== undefined) {
+                            response.data = data.data;
+                        }
                     }
                     return RestSrv.response(response,callback);
                 });
