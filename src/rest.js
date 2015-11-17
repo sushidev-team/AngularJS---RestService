@@ -211,7 +211,7 @@ angular.module('ambersive.rest').factory('RestSrv',['$http','$log',
                         case 401:
                         case 403:
                         case 500:
-                            var errorFN = RestSrv.errorHandling(response.status);
+                            var errorFN = RestSrv.errorHandling.load(response.status);
                             if(errorFN !== undefined){
                                 if(typeof(errorFN) === 'function'){
                                     errorFN(function(){
@@ -227,16 +227,34 @@ angular.module('ambersive.rest').factory('RestSrv',['$http','$log',
                 }).error(function(data,status,headers,config){
                     if(status === 0){status = 400;}
                     response.status = status;
-                    if(data !== undefined && data !== null) {
-                        if (data.status !== undefined) {
-                            response.status = data.status;
-                        }
-                        response.data = data;
-                        if (data.data !== undefined) {
-                            response.data = data.data;
-                        }
+
+                    switch(response.status){
+                        case 401:
+                        case 403:
+                        case 500:
+                            var errorFN = RestSrv.errorHandling.load(response.status);
+                            if(errorFN !== undefined){
+                                if(typeof(errorFN) === 'function'){
+                                    errorFN(function(){
+                                        return RestSrv.response(response,callback);
+                                    });
+                                }
+                            }
+                            break;
+                        default:
+                            if(data !== undefined && data !== null) {
+                                if (data.status !== undefined) {
+                                    response.status = data.status;
+                                }
+                                response.data = data;
+                                if (data.data !== undefined) {
+                                    response.data = data.data;
+                                }
+                            }
+                            return RestSrv.response(response,callback);
                     }
-                    return RestSrv.response(response,callback);
+
+
                 });
 
             } catch(err){
@@ -248,4 +266,4 @@ angular.module('ambersive.rest').factory('RestSrv',['$http','$log',
 
         return RestSrv;
 
-}]);
+    }]);

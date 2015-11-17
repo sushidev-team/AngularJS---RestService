@@ -1,7 +1,7 @@
 # RESTful - AngularJS Service
 An AngularJS service for using RESTful Webservices with an build-in auto-mechanism for detecting access tokens.
 ### Version
-0.0.1.1
+0.0.1.2
 
 ### Installation
 
