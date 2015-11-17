@@ -32,6 +32,10 @@ angular.module('ambersive.rest').factory('RestSrv',['$http','$log',
                 'on403':function(callback){
                     // overwriteable
                     if(callback){callback();}
+                },
+                'on500':function(callback){
+                    // overwriteable
+                    if(callback){callback();}
                 }
             }
         };
@@ -206,6 +210,7 @@ angular.module('ambersive.rest').factory('RestSrv',['$http','$log',
                     switch(response.status){
                         case 401:
                         case 403:
+                        case 500:
                             var errorFN = RestSrv.errorHandling(response.status);
                             if(errorFN !== undefined){
                                 if(typeof(errorFN) === 'function'){
@@ -215,8 +220,6 @@ angular.module('ambersive.rest').factory('RestSrv',['$http','$log',
                                 }
                             }
                             break;
-                        case 500:
-                            throw response;
                         default:
                             return RestSrv.response(response,callback);
                     }
